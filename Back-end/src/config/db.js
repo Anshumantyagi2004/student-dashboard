@@ -4,15 +4,14 @@ import Student from "../models/student.js";
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.URI);
-
     console.log("MongoDB Connected!");
-
+    
     await Student.createCollection();
 
-    return "Connected";   
+    return "Connected";  // 🟢 return to server
   } catch (err) {
     console.error("MongoDB Error:", err.message);
-    return "Not Connected"; 
+    return "Not Connected";
   }
 };
 
