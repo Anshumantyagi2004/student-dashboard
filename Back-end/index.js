@@ -19,7 +19,9 @@ const PORT = 5000;
 app.use(express.json()); // ✅ parse JSON request bodies
 
 app.get('/', (req, res) => {
-  res.json({msg:"Backend is running"});
+  let a=connectDB()
+  res.json({msg:"Backend is running",db:a});
+  // console.log(;)
 });
 
 app.use("/api", studentRoutes);
