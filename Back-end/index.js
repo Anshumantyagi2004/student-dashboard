@@ -18,23 +18,21 @@ app.use(cors({
   methods: ["GET", "POST"]
 }));
 
-let dbStatus = "Checking…";
 
-// 🟢 FIRST CONNECT DB — then start server
-const startServer = async () => {
-  dbStatus = await connectDB();   // 🟢 Wait until connected
+
+ await connectDB();   
 
   // 🟢 Now DB is connected — start server
   app.listen(5000, () => {
     console.log("Server running on port 5000");
   });
-};
+
 
 // 🟢 Root API: Report DB status
 app.get("/", (req, res) => {
   res.json({
     msg: "Backend is running",
-    db: dbStatus,
+  
   });
 });
 
