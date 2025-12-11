@@ -9,7 +9,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/findAllStudents");
+        const res = await fetch("https://student-dashboard-amber-five.vercel.app/api/findAllStudents");
         const result = await res.json();
 
         if (res.ok) {
