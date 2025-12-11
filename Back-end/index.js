@@ -12,7 +12,6 @@ app.use(express.json());
 // CORS for frontend
 app.use(cors({
   origin: [
-    "http://localhost:3000",
     "https://student-dashboard-wq1c.vercel.app"
   ],
   methods: ["GET", "POST"]
@@ -23,9 +22,7 @@ app.use(cors({
  await connectDB();   
 
   // 🟢 Now DB is connected — start server
-  app.listen(5000, () => {
-    console.log("Server running on port 5000");
-  });
+
 
 
 // 🟢 Root API: Report DB status
@@ -38,5 +35,8 @@ app.get("/", (req, res) => {
 
 app.use("/api", studentRoutes);
 
-// Start everything
-startServer();
+  app.listen(5000, () => {
+    console.log("Server running on port 5000");
+  });
+
+
