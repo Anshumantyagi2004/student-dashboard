@@ -5,10 +5,11 @@ import cors from 'cors';
 import studentRoutes from "./src/routes/studentRoute.js";
 
 dotenv.config();
+
 const app = express();
 app.use(express.json());
 
-// CORS for both local + vercel
+// CORS for frontend
 app.use(cors({
   origin: [
     "http://localhost:3000",
@@ -17,14 +18,19 @@ app.use(cors({
   methods: ["GET", "POST"]
 }));
 
-// 🟢 Connect DB on startup and store result
 let dbStatus = "Checking…";
 
-(async () => {
-  dbStatus = await connectDB(); // 🟢 HERE FIXED
-})();
+// 🟢 FIRST CONNECT DB — then start server
+const startServer = async () => {
+  dbStatus = await connectDB();   // 🟢 Wait until connected
 
-// 🟢 Root API: Send DB Status to frontend
+  // 🟢 Now DB is connected — start server
+  app.listen(5000, () => {
+    console.log("Server running on port 5000");
+  });
+};
+
+// 🟢 Root API: Report DB status
 app.get("/", (req, res) => {
   res.json({
     msg: "Backend is running",
@@ -34,4 +40,5 @@ app.get("/", (req, res) => {
 
 app.use("/api", studentRoutes);
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+// Start everything
+startServer();
