@@ -11,6 +11,7 @@ dotenv.config();
 const app = express();
 app.use(cors({
   origin: 'https://student-dashboard-wq1c.vercel.app',
+      methods:["GET","POST"],
   credentials: true,
 }));
 const PORT = 5000;
