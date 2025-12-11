@@ -9,7 +9,8 @@ const connectDB = async () => {
         return "Connected";
        
     } catch (err) { console.error("MongoDB Error:", err.message); return "Not Connected"; }
-}; export default connectDB
+};
+export default connectDB
 
 
 
