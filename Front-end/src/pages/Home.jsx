@@ -33,7 +33,7 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/students", {
+      const response = await fetch("https://student-dashboard-amber-five.vercel.app/api/students", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default function Home() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/findAllStudents");
+      const response = await fetch("https://student-dashboard-amber-five.vercel.app/api/findAllStudents");
       const result = await response.json();
       if (response.ok) {
         console.log("Students:", result.data);
