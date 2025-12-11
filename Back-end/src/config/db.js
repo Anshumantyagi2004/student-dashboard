@@ -8,6 +8,7 @@ const connectDB = async () => {
 
     await Student.createCollection();
     console.log("Done");
+    return "OK"
 
   } catch (err) {
     console.error("MongoDB Error:", err.message);
