@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import connectDB from './src/config/db.js';
+import connectDB, { getReadyState } from "./src/config/db.js";
 import cors from 'cors';
 import studentRoutes from "./src/routes/studentRoute.js";
 import mongoose from "mongoose";
@@ -23,11 +23,26 @@ app.use(express.json());
 connectDB();   
 
 app.get("/check-db", (req, res) => {
-  const state = mongoose.connection.readyState;
-  if (state === 1) {
-    return res.json({ connected: true, message: "MongoDB is connected ✔️" });
-  } else {
-    return res.json({ connected: false, message: "MongoDB is NOT connected ❌", state });
+try {
+    // Attempt to connect if not already connected
+    if (getReadyState() !== 1) {
+      await connectDB();
+    }
+
+    const state = getReadyState();
+    const stateMap = { 0: "disconnected", 1: "connected", 2: "connecting", 3: "disconnecting" };
+
+    return res.json({
+      connected: state === 1,
+      message: `MongoDB ${stateMap[state] || state}`,
+      state
+    });
+  } catch (err) {
+    return res.status(500).json({
+      connected: false,
+      message: "MongoDB connection failed ❌",
+      error: err.message
+    });
   }
 });
 
